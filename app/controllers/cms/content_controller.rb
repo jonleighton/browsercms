@@ -58,6 +58,7 @@ class Cms::ContentController < Cms::ApplicationController
   # if caching is not enabled
   def render_page
     @_page_route.execute(self) if @_page_route
+    prepare_connectables_for_render unless logged_in?
     render :layout => @page.layout, :action => 'show'
   end
   
@@ -94,11 +95,18 @@ class Cms::ContentController < Cms::ApplicationController
         @template.instance_variable_set("#{v}", nil)
       end
       
+      prepare_connectables_for_render unless logged_in?
       render :layout => @page.layout, :template => 'cms/content/show', :status => status
     else
       handle_server_error(exception)
     end      
-  end    
+  end   
+  
+  # If any of the page's connectables (portlets, etc) are renderable, they may have a render method
+  # which does "controller" stuff, so we need to get that run before rendering the page.
+  def prepare_connectables_for_render
+    @page.connectables_by_connector.values.each { |c| c.prepare_to_render(self) }
+  end 
 
   # ----- Before Filters -------------------------------------------------------
   def construct_path
