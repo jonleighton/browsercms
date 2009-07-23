@@ -79,6 +79,38 @@ class LoadSeedData < ActiveRecord::Migration
 HTML
     )
     
+    create_page_partial(:menu,
+      :name => "_menu", :format => "html", :handler => "erb",
+      :body => <<-'HTML'
+<div id="menu" class="menu">
+  <% unless items.empty? %>
+    <ul>
+      <% items.each_with_index do |item, i| %>
+        <%= render :partial => "partials/menu_item", :object => item, :locals => { :depth => 1, :position => i + 1, :item_count => items.length } %>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+HTML
+    )
+
+    create_page_partial(:menu_item,
+      :name => "_menu_item", :format => "html", :handler => "erb",
+      :body => <<-'HTML'
+<li id="<%= menu_item[:id] %>" class="depth-<%= depth %> <%= 'first' if position == 0 %> <%= 'last' if position == item_count %> <%= 'on' if menu_item[:selected] %> <%= 'open' unless menu_item[:children].blank? %>">
+  <a href="<%= menu_item[:url] %>" <%= 'target=#{menu_item[:target]}' if menu_item[:target] %>><%= menu_item[:name] %></a>
+
+  <% unless menu_item[:children].blank? %>
+    <ul>
+      <% menu_item[:children].each_with_index do |item, i| %>
+        <%= render :partial => "partials/menu_item", :object => item, :locals => { :depth => depth + 1, :position => i + 1, :item_count => menu_item[:children].length } %>
+      <% end %>
+    </ul>
+  <% end %>
+</li>
+HTML
+    )
+    
     pages(:home).publish! 
         
     puts "*************************************************"    
