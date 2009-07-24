@@ -18,6 +18,7 @@ module Cms
           attr_accessor :connected_page
         
           has_many :connectors, :as => :connectable    
+          before_destroy :destroy_connectors
 
           attr_accessor :updated_by_page
 
@@ -92,7 +93,11 @@ module Cms
             end
           end
           true
-        end        
+        end    
+        
+        def destroy_connectors
+          connectors.destroy_all
+        end    
       end
     end
   end
