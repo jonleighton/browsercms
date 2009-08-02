@@ -87,6 +87,7 @@ border: 1px solid #CCC;
 .text_fields,
 .checkbox_group {
 padding: 8px 0;
+overflow: hidden;
 }
  
 .text_fields input, .select_fields input,
