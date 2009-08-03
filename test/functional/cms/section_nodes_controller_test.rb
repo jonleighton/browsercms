@@ -73,9 +73,6 @@ class Cms::SectionNodesControllerPermissionsTest < ActionController::TestCase
     get :index
     assert_response :success
     
-    # Brittle: 9 is noneditables.size + %w(MySite system Home NotFound AccessDenied ServerError).size
-    assert_select "td.node.non-editable", 9
-    
     # Check that each non-editable has the non-editable class, and that each editable does not have
     # the non-editable class
     @noneditables.each do |ne|
@@ -87,3 +84,4 @@ class Cms::SectionNodesControllerPermissionsTest < ActionController::TestCase
     end
   end
 end
+
