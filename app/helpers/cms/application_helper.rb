@@ -27,7 +27,7 @@ module Cms
     def render_connector_and_connectable(connector, connectable)
       if logged_in? && @mode == "edit" && current_user.able_to_edit?(connector.page)
         render :partial => 'cms/pages/edit_connector', 
-          :locals => { :connector => connector, :connectable => connectable}
+          :locals => { :connector => connector, :connectable => connectable }
       else
         render_connectable(connectable)
       end
