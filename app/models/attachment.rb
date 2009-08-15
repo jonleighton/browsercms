@@ -148,7 +148,7 @@ class Attachment < ActiveRecord::Base
   end  
   
   def self.use_x_sendfile
-    @use_x_sendfile ||= true
+    @use_x_sendfile ||= false
   end
   
   def self.use_x_sendfile=(use_x_sendfile)
