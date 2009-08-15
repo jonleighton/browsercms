@@ -5,5 +5,6 @@ class Cms::DashboardController < Cms::BaseController
     @incomplete_tasks = current_user.tasks.incomplete.all(
       :include => :page, 
       :order => "tasks.due_date desc, pages.name")
+    @recent_updates = Page::Version.recent_updates
   end
 end

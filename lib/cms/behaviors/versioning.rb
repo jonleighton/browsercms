@@ -35,7 +35,9 @@ module Cms
             end
             def versioned_object
               send(versioned_class.name.underscore.to_sym)
-            end                 
+            end       
+            
+            named_scope :recent_updates, :order => "updated_at desc", :limit => 10    
           end
 
           version_class.versioned_class = self

@@ -4,6 +4,11 @@ margin: -4px 5px 0 5px;
 background-color: #FFFFFF;
 }
 
+.dashboard_unit.wide {
+  clear: both;
+  width: 990px;
+}
+
 .dashboard_unit h2 {
 height: 12px;
 color: #FFF;
@@ -13,12 +18,18 @@ font-size: 10pt;
 text-transform: uppercase;
 letter-spacing: 1px;
 }
+.dashboard_unit h2 {
+background: #4679B8 url(/images/cms/dashboard/header_bg.gif) repeat-x 0 0;
+}
 .dashboard_unit h2.left {
 background: #4679B8 url(/images/cms/dashboard/header_left_bg.gif) no-repeat 0 0;
 }
 
+.dashboard_unit .roundedcorners {
+  margin: 6px;
+}
 .dashboard_unit form {
-padding: 6px;
+  padding: 0;
 }
 
 .dashboard_unit {
@@ -112,6 +123,12 @@ background: transparent url(/images/cms/dashboard/bottom_cap_content.png) no-rep
 
 div.top_cap {
   background: url(/images/cms/dashboard/top_cap.png) no-repeat 0 0;
+}
+div.wide_top_cap {
+  background: url(/images/cms/top_cap.png) no-repeat 0 0;
+  width: 1000px;
+  height: 9px;
+  margin: 20px 0 0 0;
 }
 #contentwrapbig {
   background: none;
