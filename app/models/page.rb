@@ -48,6 +48,7 @@ class Page < ActiveRecord::Base
   
   before_validation :append_leading_slash_to_path
   before_destroy :delete_connectors
+  before_destroy :delete_section_node
   
   validates_presence_of :name, :path
   validates_uniqueness_of :path
@@ -181,6 +182,10 @@ class Page < ActiveRecord::Base
     else
       build_section_node(:node => self, :section => sec)
     end      
+  end
+  
+  def delete_section_node
+    section_node.destroy if section_node
   end
   
   def public?

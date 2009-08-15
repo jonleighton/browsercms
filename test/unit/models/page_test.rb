@@ -724,3 +724,14 @@ class PortletsDontHaveDraftsTest < ActiveRecord::TestCase
   end
 end
 
+class PageInSectionTest < ActiveRecord::TestCase
+  def test_deleting_page_in_section
+    @section = Factory(:section)
+    @page = Factory(:page, :section => @section)
+    
+    assert_equal 1, @section.child_nodes.length
+    @page.destroy
+    @section.reload
+    assert_equal 0, @section.child_nodes.length
+  end
+end
