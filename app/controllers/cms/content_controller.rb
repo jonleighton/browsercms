@@ -175,7 +175,8 @@ class Cms::ContentController < Cms::ApplicationController
           send_file(@file, 
             :filename => @attachment.file_name,
             :type => @attachment.file_type,
-            :disposition => "inline"
+            :disposition => "inline",
+            :x_sendfile => Attachment.use_x_sendfile
           ) 
         end    
       end

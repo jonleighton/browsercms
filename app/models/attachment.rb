@@ -147,6 +147,14 @@ class Attachment < ActiveRecord::Base
     Attachment.published.not_archived.first(:conditions => {:file_path => file_path})
   end  
   
+  def self.use_x_sendfile
+    @use_x_sendfile ||= true
+  end
+  
+  def self.use_x_sendfile=(use_x_sendfile)
+    @use_x_sendfile = use_x_sendfile
+  end
+  
   #----- Instance Methods ------------------------------------------------------
 
   def file_name

@@ -109,6 +109,15 @@ class Cms::ContentControllerTest < ActionController::TestCase
     assert_equal "This is a test", streaming_file_contents
   end
   
+  def test_use_x_sendfile
+    create_file
+    Attachment.use_x_sendfile = true
+    get :show, :path => ["test.txt"]
+    assert_response :success
+    assert_equal @file_block.attachment.full_file_location, @response.headers["X-Sendfile"]
+    Attachment.use_x_sendfile = false
+  end
+  
   def test_show_page_route
     @page_template = Factory(:page_template, :name => "test_show_page_route")
     @page = Factory(:page, 
