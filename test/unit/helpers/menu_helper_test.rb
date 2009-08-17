@@ -95,6 +95,18 @@ class Cms::MenuHelperTest < ActionView::TestCase
     
   end
   
+  test "menu items where the page is hidden, and it is the first page or link of its section" do
+    Page.first.update_attributes(:hidden => true, :publish_on_save => true)
+    @section = Factory(:section, :parent => root_section, :name => "Section", :path => "/section")
+    @section_page = Factory(:page, :section => @section, :name => "Section Page", :path => "/section_page", :hidden => true, :publish_on_save => true)
+    
+    expected = [
+      { :id => "section_#{@section.id}", :url => "/section_page", :name => "Section", :selected => true }
+    ]
+    
+    assert_equal expected, menu_items(:page => @section_page)
+  end
+  
   def test_menu_with_links
     Page.first.update_attributes(:hidden => true, :publish_on_save => true)
     

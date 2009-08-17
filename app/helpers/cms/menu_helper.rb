@@ -120,12 +120,17 @@ module Cms
         section_nodes.map do |section_node|
           node = section_node.node
           
-          item = {}
-          item[:selected] = true if selected_page == node
-          item[:id] = "#{section_node.node_type.underscore}_#{section_node.node_id}"
-          
-          # If we are showing a section item, we want to use the path for the first page
+          # If we are showing a section item, we want to use the first page or link
           page = section_node.section? ? node.first_page_or_link : node
+          
+          item = {}
+          
+          if selected_page == node ||
+             section_node.section? && page.hidden? && selected_page == page
+            item[:selected] = true
+          end
+          
+          item[:id] = "#{section_node.node_type.underscore}_#{section_node.node_id}"
           
           item[:url] = page && page.path || '#'
           item[:name] = node.name
