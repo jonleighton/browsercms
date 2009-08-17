@@ -22,7 +22,9 @@ module Cms
           before_validation_on_create :initialize_version
 
           attr_accessor :revert_to_version
-
+          
+          versioned_class = self
+          
           #Define the version class
           const_set("Version", Class.new(ActiveRecord::Base)).class_eval do 
             class << self; attr_accessor :versioned_class end
@@ -37,7 +39,9 @@ module Cms
               send(versioned_class.name.underscore.to_sym)
             end       
             
-            named_scope :recent_updates, :order => "updated_at desc", :limit => 10    
+            named_scope :recent_updates, :order => "updated_at desc", :limit => 10,
+                        :joins => versioned_class.table_name.singularize.to_sym,
+                        :conditions => { "#{versioned_class.table_name}.deleted" => false }
           end
 
           version_class.versioned_class = self
