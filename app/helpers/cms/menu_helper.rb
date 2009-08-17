@@ -126,7 +126,7 @@ module Cms
           item = {}
           
           if selected_page == node ||
-             section_node.section? && page.hidden? && selected_page == page
+             section_node.section? && selected_page.hidden? && selected_page == page
             item[:selected] = true
           end
           
