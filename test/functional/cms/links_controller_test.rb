@@ -96,7 +96,8 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     get :new, :section_id => @noneditable_section
-    assert @response.body.include?("Denied")
+    assert_response 403
+    assert_template "cms/shared/access_denied"
   end
 
   def test_create_permissions
@@ -106,6 +107,7 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     post :create, :section_id => @noneditable_section, :name => "Another non-editable link"
+    assert_response 403
     assert_template "cms/shared/access_denied"
   end
 
@@ -116,6 +118,7 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     get :edit, :id => @noneditable_link
+    assert_response 403
     assert_template "cms/shared/access_denied"
   end
 
@@ -126,6 +129,7 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     put :update, :id => @noneditable_link, :name => "Modified non-editable link"
+    assert_response 403
     assert_template "cms/shared/access_denied"
   end
 
@@ -136,6 +140,7 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     delete :destroy, :id => @noneditable_link
+    assert_response 403
     assert_template "cms/shared/access_denied"
   end
 end

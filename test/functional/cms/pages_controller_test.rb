@@ -125,6 +125,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     get :new, :section_id => @noneditable_section
+    assert_response 403
     assert_template "cms/shared/access_denied"
   end
 
@@ -135,6 +136,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     post :create, :section_id => @noneditable_section, :name => "Another non-editable page"
+    assert_response 403
     assert_template "cms/shared/access_denied"
   end
 
@@ -145,6 +147,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     get :edit, :id => @noneditable_page
+    assert_response 403
     assert_template "cms/shared/access_denied"
   end
 
@@ -156,6 +159,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     put :update, :id => @noneditable_page, :name => "Modified non-editable page"
+    assert_response 403
     assert_template "cms/shared/access_denied"
 
     # archive
@@ -163,6 +167,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     put :archive, :id => @noneditable_page
+    assert_response 403
     assert_template "cms/shared/access_denied"
 
     # hide
@@ -170,6 +175,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     put :hide, :id => @noneditable_page
+    assert_response 403
     assert_template "cms/shared/access_denied"
 
     # publish
@@ -177,6 +183,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     put :publish, :id => @noneditable_page
+    assert_response 403
     assert_template "cms/shared/access_denied"
 
     # revert_to
@@ -195,6 +202,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     delete :destroy, :id => @noneditable_page
+    assert_response 403
     assert_template "cms/shared/access_denied"
   end
 end

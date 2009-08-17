@@ -17,11 +17,12 @@ class Cms::SectionsController < Cms::BaseController
   
   def new
     @section = @parent.sections.build
-    @section.groups = public_groups + cms_groups
+    @section.groups = @parent.groups
   end
   
   def create
     @section = Section.new(params[:section])
+    @section.groups = @parent.groups unless current_user.able_to?(:administrate)
     @section.parent = @parent
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was created"
@@ -35,7 +36,9 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def update
-    if @section.update_attributes(params[:section])
+    @section.attributes = params[:section]
+    @section.groups = @section.parent.groups unless current_user.able_to?(:administrate)
+    if @section.save
       flash[:notice] = "Section '#{@section.name}' was updated"
       redirect_to [:cms, @section]
     else
