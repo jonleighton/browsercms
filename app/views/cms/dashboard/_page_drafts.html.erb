@@ -8,7 +8,7 @@
           <tr>
             <th class="select first unbordered">&nbsp;</th>
             <th colspan="2"><div class="dividers">Name</div></th>
-            <th><div class="dividers">User</div></th>
+            <th><div class="dividers">Editor</div></th>
 	          <th class="last" colspan="2">Date</th>
           </tr>
         </thead>
@@ -27,7 +27,7 @@
                 </td>
                 <td class="updated_by">
                   <div class="dividers">
-                    <%= h(page.updated_by ? page.updated_by.login : nil) %>
+                    <%= h(page.draft.updated_by ? page.draft.updated_by.login : nil) %>
                   </div>
                 </td>
                 <td class="updated_at"><%= page.updated_at.strftime("%b %d") %></td>
