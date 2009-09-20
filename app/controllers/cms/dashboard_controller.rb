@@ -6,6 +6,6 @@ class Cms::DashboardController < Cms::BaseController
     @incomplete_tasks = current_user.tasks.incomplete.all(
       :include => :page, 
       :order => "tasks.due_date desc, pages.name")
-    @recently_updated_pages = Page.by_update_time(:limit => 10)
+    @recently_updated_pages = Page.by_update_time.all(:limit => 10)
   end
 end
