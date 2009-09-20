@@ -25,8 +25,13 @@ module Cms
           
           versioned_class = self
           
-          named_scope :by_update_time, :select => "distinct #{table_name}.*", :joins => :versions,
-                      :order => "#{@version_table_name}.updated_at desc"
+          named_scope :by_update_time, :order => "#{@version_table_name}.updated_at desc",
+            :joins => "INNER JOIN #{@version_table_name} ON " + 
+                      "#{@version_table_name}.page_id = #{table_name}.id AND " +
+                      "#{@version_table_name}.version = (" +
+                        "SELECT MAX(version) FROM #{@version_table_name} " +
+                        "WHERE #{@version_foreign_key} = #{table_name}.id" +
+                      ")"
           
           #Define the version class
           const_set("Version", Class.new(ActiveRecord::Base)).class_eval do 
