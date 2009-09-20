@@ -25,6 +25,9 @@ module Cms
           
           versioned_class = self
           
+          named_scope :by_update_time, :select => "distinct #{table_name}.*", :joins => :versions,
+                      :order => "#{@version_table_name}.updated_at desc"
+          
           #Define the version class
           const_set("Version", Class.new(ActiveRecord::Base)).class_eval do 
             class << self; attr_accessor :versioned_class end
@@ -37,11 +40,7 @@ module Cms
             end
             def versioned_object
               send(versioned_class.name.underscore.to_sym)
-            end       
-            
-            named_scope :recent_updates, :order => "updated_at desc", :limit => 10,
-                        :joins => versioned_class.table_name.singularize.to_sym,
-                        :conditions => { "#{versioned_class.table_name}.deleted" => false }
+            end
           end
 
           version_class.versioned_class = self

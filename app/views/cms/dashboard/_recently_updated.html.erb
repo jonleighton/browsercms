@@ -1,5 +1,5 @@
-<div class="dashboard_unit wide" id="recent_changes">
-  <h2>Recent Changes</h2>
+<div class="dashboard_unit wide" id="recently_updated_pages">
+  <h2>Recently Updated Pages</h2>
 
   <div class="roundedcorners" style="position: relative">
     <table class="data">
@@ -7,35 +7,30 @@
         <tr>
           <th class="name first unbordered" colspan="2"><div class="dividers">Page</div></th>
           <th><div class="dividers">Version</div></th>
-          <th><div class="dividers">Comment</div></th>
           <th><div class="dividers">Date</div></th>
           <th class="last" colspan="2"><div class="dividers">Editor</div></th>
         </tr>
       </thead>
       <tbody>
-        <% @recent_updates.each do |r| %>
+        <% @recently_updated_pages.each do |page| %>
           <tr>
             <td class="first"></td>
             <td class="name">
               <div class="dividers">
-                <%= link_to h(r.page.name_with_section_path), r.page.path %>
+                <%= link_to h(page.name_with_section_path), page.path %>
               </div>
             </td>
             <td>
               <div class="dividers">
-                <%= "v.#{r.version}" %>
-                <%= '(LIVE)' if r.page.version == r.version %>
-                <%= '(CURRENT)' if r.page.draft == r %>
+                <%= "v.#{page.draft.version}" %>
+                <%= '(LIVE)' if page.version == page.draft.version %>
               </div>
             </td>
             <td>
-              <div class="dividers"><%=h r.version_comment %></div>
+              <div class="dividers"><%= page.draft.updated_at.strftime("%b %d, %Y %I:%M %p") if page.draft.updated_at %></div>
             </td>
             <td>
-              <div class="dividers"><%= r.created_at.strftime("%b %d, %Y %I:%M %p") if r.created_at %></div>
-            </td>
-            <td>
-              <div><%= r.updated_by.login if r.updated_by %></div>
+              <div><%= page.draft.updated_by.login if page.draft.updated_by %></div>
             </td>
             <td class="last"></td>
           </tr>
