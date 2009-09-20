@@ -154,6 +154,13 @@ class Cms::ContentControllerTest < ActionController::TestCase
     assert_response :success
     assert_select "h3", "I've been edited"
   end
+  
+  def test_redirect
+    Redirect.create!(:from_path => "/foo", :to_path => "/bar")
+    get :show, :path => ["foo"]
+    assert_redirected_to "/bar"
+    assert_response 301
+  end
 
 
 
