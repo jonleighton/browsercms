@@ -1,14 +1,6 @@
-jQuery(function($){
-  $('textarea.editor').each(function(e){
-    if(editorEnabled()) {
-      loadEditor(this.id)
-    }
-  });  
-})
+/* Editor-specific code here */
 
-function editorEnabled() {
-  return $.cookie('editorEnabled') ? $.cookie('editorEnabled') == "true" : true
-}
+$.include('/fckeditor/fckeditor.js');
 
 function disableEditor(id) {
   if(typeof(FCKeditorAPI) != "undefined" && FCKeditorAPI.GetInstance(id) != null) {
@@ -28,15 +20,6 @@ function enableEditor(id) {
     $('#'+id).hide()
     $('#'+id+'___Frame').show()  
     $.cookie('editorEnabled', true, { expires: 90, path: '/' })    
-  }
-}
-
-function toggleEditor(id, status) {
-  loadEditor(id)
-  if(status == 'Simple Text' || status.value == 'disabled'){
-    disableEditor(id) 
-  } else {
-    enableEditor(id) 
   }
 }
 

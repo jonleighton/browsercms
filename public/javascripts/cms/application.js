@@ -1,3 +1,25 @@
+/* WYSIWYG editor - editor-agnostic code here */
+jQuery(function($){
+  $('textarea.editor').each(function(e){
+    if(editorEnabled()) {
+      loadEditor(this.id)
+    }
+  });
+})
+
+function editorEnabled() {
+  return $.cookie('editorEnabled') ? $.cookie('editorEnabled') == "true" : true
+}
+
+function toggleEditor(id, status) {
+  loadEditor(id)
+  if(status == 'Simple Text' || status.value == 'disabled'){
+    disableEditor(id) 
+  } else {
+    enableEditor(id) 
+  }
+}
+
 //CMS related functions
 jQuery(function($) {
   
