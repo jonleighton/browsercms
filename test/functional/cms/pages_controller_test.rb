@@ -65,6 +65,15 @@ class Cms::PagesControllerTest < ActionController::TestCase
       assert_select "tr[id=?]", "revision_#{n}"
     end
   end
+  
+  def test_version
+    create_page
+    @page.update_attributes(:name => "V2")
+    
+    get :version, :id => @page.to_param, :version => 1
+    
+    assert_response :success
+  end
 
   def test_revert_to
     create_page
