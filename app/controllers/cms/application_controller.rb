@@ -3,6 +3,7 @@ class Cms::ApplicationController < ApplicationController
   include Cms::ErrorHandling
 
   helper :all # include all helpers, all the time
+  helper_method :cms_site?, :url_with_cms_domain_prefix, :url_without_cms_domain_prefix
 
   helper Cms::ApplicationHelper
   helper Cms::FormTagHelper
